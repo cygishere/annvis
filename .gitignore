@@ -1,0 +1,6 @@
+.cache
+bin/*.o
+bin/*.out
+bin/*.exe
+bin/compile_commands.json
+compile_commands.json
