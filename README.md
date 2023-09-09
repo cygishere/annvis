@@ -7,6 +7,16 @@ In order to visualize ANN in a 2D plane, the input layer and output layer are co
 ## Dependencies
 - [raylib](https://www.raylib.com/) (in near future)
 
+## Roadmap
+- ANN part
+    - [x] Structure
+    - [x] Utilities for inspection
+    - [x] ANN forwarding
+- Graphics part
+    - [ ] Graph sampling
+    - [ ] Graph rendering
+    - [ ] User interface
+
 ## Build
 
 ``` sh
