@@ -1,8 +1,10 @@
-# Annis - ANN Visualizer
+# Annvis - ANN VISualizer
 
-**WORK IN PROGRASS**
-A visualizer for ANNs, lets you visualize the impact of weight changes on the output of a simple ANN.
-In order to visualize ANN in a 2D plane, the input layer and output layer are constrained to only contain a single neuron respectively.
+**WORK IN PROGRESS**
+
+A visualizer for ANNs, lets you visualize the impact of weights change on the output of a simple ANN.
+
+In order to visualize ANN in a 2D plane, the input layer and output layer are constrained to contain only a single neuron respectively.
 
 ## Dependencies
 - [raylib](https://www.raylib.com/) (in near future)
