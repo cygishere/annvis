@@ -9,7 +9,7 @@ src := ../src
 .PHONY: all
 all: run
 
-main.out: main.o ann.o layer.o
+main.out: main.o ann.o layer.o help.o
 	$(CC) $(LIBS) -o $@ $^
 
 main.o: $(src)/main.c $(src)/ann.h
@@ -18,7 +18,10 @@ main.o: $(src)/main.c $(src)/ann.h
 ann.o: $(src)/ann.c $(src)/ann.h $(src)/layer.h
 	$(CC) $(CFLAGS) -c $<
 
-layer.o: $(src)/layer.c $(src)/layer.h
+layer.o: $(src)/layer.c $(src)/layer.h $(src)/help.h
+	$(CC) $(CFLAGS) -c $<
+
+help.o: $(src)/help.c $(src)/help.h
 	$(CC) $(CFLAGS) -c $<
 
 .PHONY: run
