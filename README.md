@@ -7,7 +7,7 @@ A visualizer for ANNs, lets you visualize the impact of weights change on the ou
 In order to visualize ANN in a 2D plane, the input layer and output layer are constrained to contain only a single neuron respectively.
 
 ## Dependencies
-- [raylib](https://www.raylib.com/) (in near future)
+- [raylib](https://www.raylib.com/)
 
 ## Roadmap
 - ANN part
