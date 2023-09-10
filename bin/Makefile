@@ -7,12 +7,13 @@ LIBS := -fsanitize=address
 src := ../src
 
 .PHONY: all
-all: run
+all: test-render
 
-main.out: main.o ann.o layer.o help.o
+# test ann
+test-ann.out: test-ann.o ann.o layer.o help.o
 	$(CC) $(LIBS) -o $@ $^
 
-main.o: $(src)/main.c $(src)/ann.h
+test-ann.o: $(src)/test-ann.c $(src)/ann.h
 	$(CC) $(CFLAGS) -c $<
 
 ann.o: $(src)/ann.c $(src)/ann.h $(src)/layer.h
@@ -24,10 +25,25 @@ layer.o: $(src)/layer.c $(src)/layer.h $(src)/help.h
 help.o: $(src)/help.c $(src)/help.h
 	$(CC) $(CFLAGS) -c $<
 
-.PHONY: run
-run: main.out
-	./main.out
+.PHONY: test-ann
+test-ann: test-ann.out
+	./test-ann.out
 
+# test render
+test-render.out: test-render.o render.o
+	$(CC) $(LIBS) -o $@ $^
+
+test-render.o: $(src)/test-render.c $(src)/render.h
+	$(CC) $(CFLAGS) -c $<
+
+render.o: $(src)/render.c $(src)/render.h
+	$(CC) $(CFLAGS) -c $<
+
+.PHONY: test-render
+test-render: test-render.out
+	./test-render.out
+
+# common targets
 .PHONY: clean
 clean:
 	rm *.o *.out
