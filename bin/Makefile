@@ -1,13 +1,17 @@
 .POSIX:
 CC = cc
+
 CFLAGS := -Wall -Wextra -std=c11 -pedantic
 CFLAGS += -g3 -DDEBUG
+CFLAGS += $(shell pkg-config --cflags raylib)
+
 LIBS := -fsanitize=address
+LIBS += $(shell pkg-config --libs raylib)
 
 src := ../src
 
 .PHONY: all
-all: test-render
+all: test-window
 
 # test ann
 test-ann.out: test-ann.o ann.o layer.o help.o
@@ -30,18 +34,18 @@ test-ann: test-ann.out
 	./test-ann.out
 
 # test render
-test-render.out: test-render.o render.o
+test-window.out: test-window.o window.o
 	$(CC) $(LIBS) -o $@ $^
 
-test-render.o: $(src)/test-render.c $(src)/render.h
+test-window.o: $(src)/test-window.c $(src)/window.h
 	$(CC) $(CFLAGS) -c $<
 
-render.o: $(src)/render.c $(src)/render.h
+window.o: $(src)/window.c $(src)/window.h
 	$(CC) $(CFLAGS) -c $<
 
-.PHONY: test-render
-test-render: test-render.out
-	./test-render.out
+.PHONY: test-window
+test-window: test-window.out
+	./test-window.out
 
 # common targets
 .PHONY: clean
