@@ -18,6 +18,9 @@ In order to visualize ANN in a 2D plane, the input layer and output layer are co
     - [ ] Graph sampling
     - [ ] Graph rendering
     - [ ] User interface
+    
+## Current Problems
+- How to deal with overflow & underflow?
 
 ## Build
 

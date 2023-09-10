@@ -5,7 +5,7 @@ CFLAGS := -Wall -Wextra -std=c11 -pedantic
 CFLAGS += -g3 -DDEBUG
 CFLAGS += $(shell pkg-config --cflags raylib)
 
-LIBS := -fsanitize=address
+LIBS := -fsanitize=address -lm
 LIBS += $(shell pkg-config --libs raylib)
 
 src := ../src
