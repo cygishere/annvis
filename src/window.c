@@ -1,4 +1,5 @@
 #include "window.h"
+#include "sampling.h"
 #include <math.h>
 #include <raylib.h>
 #include <stdio.h>
@@ -27,6 +28,7 @@ window_init (u32 width, u32 height, const char *name)
   win.width = width;
   win.height = height;
 
+  /* viewport size */
   win.xmin = -10.f;
   win.xmax = 10.f;
   win.ymin = 0.f;
@@ -34,31 +36,14 @@ window_init (u32 width, u32 height, const char *name)
 
   win.npoints = 401;
 
-  /* HACK: should not malloc, hook ptr instead */
-  float xs[win.npoints];
-  float ys[win.npoints];
-  xs[0] = win.xmin;
-  for (u32 i = 1; i != win.npoints; ++i)
-    {
-      /* TODO */
-      float der = 2.f * xs[i - 1];
-      xs[i] = xs[i - 1] + 0.5f / sqrtf (1.f + der * der);
-      printf ("der: %f, x: %f, dist: %f, cos: %f\n", der, xs[i],
-              sqrtf (powf (xs[i] - xs[i - 1], 2.f)
-                     + powf (powf (xs[i], 2.f) - powf (xs[i - 1], 2.f), 2.f)),
-              1.f / sqrtf (1.f + der * der));
-      /* xs[i] = (4.4f + 4.4f) / (win.npoints + 1) * (i + 1) - 4.4f; */
-    }
-  for (u32 i = 0; i != win.npoints; ++i)
-    {
-      ys[i] = xs[i] * xs[i];
-    }
   win.xs = malloc (sizeof win.xs * win.npoints);
   win.ys = malloc (sizeof win.ys * win.npoints);
-  for (size_t i = 0; i != win.npoints; ++i)
+  av_Point points[win.npoints];
+  SAMPLING_FILL_XY (points, &win.npoints, win.xmin, win.xmax, square);
+  for (u32 i = 0; i != win.npoints; ++i)
     {
-      win.xs[i] = xs[i];
-      win.ys[i] = ys[i];
+      win.xs[i] = points[i].x;
+      win.ys[i] = points[i].y;
     }
 
   SetConfigFlags (FLAG_MSAA_4X_HINT);

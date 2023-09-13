@@ -34,13 +34,16 @@ test-ann: test-ann.out
 	./test-ann.out
 
 # test render
-test-window.out: test-window.o window.o
+test-window.out: test-window.o window.o sampling.o
 	$(CC) $(LIBS) -o $@ $^
 
 test-window.o: $(src)/test-window.c $(src)/window.h
 	$(CC) $(CFLAGS) -c $<
 
-window.o: $(src)/window.c $(src)/window.h
+window.o: $(src)/window.c $(src)/window.h $(src)/sampling.h
+	$(CC) $(CFLAGS) -c $<
+
+sampling.o: $(src)/sampling.c $(src)/sampling.h
 	$(CC) $(CFLAGS) -c $<
 
 .PHONY: test-window
