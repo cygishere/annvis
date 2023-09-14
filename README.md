@@ -14,7 +14,9 @@ In order to visualize ANN in a 2D plane, the input layer and output layer are co
     - [x] Structure
     - [x] Utilities for inspection
     - [x] ANN forwarding
-    - [ ] ANN backprop
+    - [ ] ANN backprop (partial)
+      - [ ] equation 1
+      - [ ] equation 2
 - Graphics part
     - [x] Graph sampling
     - [x] Graph rendering
