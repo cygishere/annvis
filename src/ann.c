@@ -1,18 +1,15 @@
 #include "ann.h"
+#include "ann_private.h"
 #include "layer.h"
 #include <stdlib.h>
-
-struct ANN_t
-{
-  u32 nmemb;
-  Layer *layers;
-};
 
 ANN
 ann_alloc (ANN_config *config)
 {
   ANN ann = malloc (sizeof *ann);
+  ann->is_backprop_enabled = false;
   ann->nmemb = config->layer_count;
+  ann->label = NULL;
   ann->layers = malloc (sizeof *ann->layers * ann->nmemb);
 
   ann->layers[0] = layer_alloc (config->layer_nmembs[0], config->input_count);

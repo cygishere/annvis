@@ -13,6 +13,7 @@ layer_alloc (u32 nthis, u32 nprev)
   layer->outs = malloc (sizeof *layer->outs * nthis);
   layer->ws = malloc (sizeof *layer->ws * layer->nws);
   layer->bs = malloc (sizeof *layer->bs * layer->nbs);
+  layer->bpr = NULL;
   return layer;
 }
 
@@ -70,7 +71,12 @@ layer_calc (Layer layer)
         {
           out += layer->ins[c] * weights[c];
         }
-      layer->outs[r] = relu (out + layer->bs[r]);
+      out += layer->bs[r];
+      if (layer->bpr != NULL)
+        {
+          layer->bpr->zs[r] = out;
+        }
+      layer->outs[r] = relu (out);
       weights += layer->nins;
     }
 }
@@ -115,4 +121,6 @@ layer_fprint_arrays (FILE *file, Layer layer)
       fprintf (file, " %8f ", layer->outs[i]);
     }
   fprintf (file, "\n");
+
+  fprintf (file, "bpr: %p\n", (void *)layer->bpr);
 }

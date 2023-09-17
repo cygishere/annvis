@@ -1,6 +1,7 @@
 #ifndef _LAYER_H_
 #define _LAYER_H_
 
+#include "backprop_private.h"
 #include <stdint.h>
 #include <stdio.h>
 
@@ -23,6 +24,9 @@ struct Layer_t
   float *outs; /* output neurons */
   float *ws;   /* weights */
   float *bs;   /* biases */
+
+  Backpropagator bpr; /* optional: if NULL, ignore, if not NULL, it's hooked
+                with backpropagator */
 };
 
 /** Note: The input layer is not alloced, please hook input before forward */

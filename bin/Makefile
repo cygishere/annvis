@@ -1,5 +1,5 @@
 .POSIX:
-CC = cc
+CC = clang
 
 CFLAGS := -Wall -Wextra -std=c11 -pedantic
 CFLAGS += -g3 -DDEBUG
@@ -11,22 +11,25 @@ LIBS += $(shell pkg-config --libs raylib)
 src := ../src
 
 .PHONY: all
-all: test-window
+all: test-ann #test-window
 
 # test ann
-test-ann.out: test-ann.o ann.o layer.o help.o
+test-ann.out: test-ann.o ann.o layer.o help.o backprop.o
 	$(CC) $(LIBS) -o $@ $^
 
-test-ann.o: $(src)/test-ann.c $(src)/ann.h
+test-ann.o: $(src)/test-ann.c $(src)/ann.h $(src)/backprop.h
 	$(CC) $(CFLAGS) -c $<
 
-ann.o: $(src)/ann.c $(src)/ann.h $(src)/layer.h
+ann.o: $(src)/ann.c $(src)/ann.h $(src)/layer.h $(src)/ann_private.h
 	$(CC) $(CFLAGS) -c $<
 
-layer.o: $(src)/layer.c $(src)/layer.h $(src)/help.h
+layer.o: $(src)/layer.c $(src)/layer.h $(src)/help.h $(src)/backprop_private.h
 	$(CC) $(CFLAGS) -c $<
 
 help.o: $(src)/help.c $(src)/help.h
+	$(CC) $(CFLAGS) -c $<
+
+backprop.o: $(src)/backprop.c $(src)/backprop.h $(src)/ann.h $(src)/ann_private.h $(src)/layer.h $(src)/backprop_private.h
 	$(CC) $(CFLAGS) -c $<
 
 .PHONY: test-ann
